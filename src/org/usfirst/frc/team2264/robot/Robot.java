@@ -91,8 +91,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("right speed", oi.rightStick.getY());
 		//left.set(oi.getLeftJoystick()*speedAdjustment);
 		//right.set(oi.getRightJoystick()*speedAdjustment);
-		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(oi.getLeftJoystick()));
-		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(oi.getRightJoystick()));
+		double leftReading = oi.getLeftJoystick();
+		double rightReading = oi.getRightJoystick();
+		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
+		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 
 		//drive.tankDrive(oi.leftStick.getY(),oi.rightStick.getY());
 	}
