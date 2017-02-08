@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2264.robot;
 
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -12,9 +10,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class RobotMap {
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
+
 	  public static final int shooterMotor = 0;
 	  public static final int feederMotor = 1;
-//    public static final int collectorMotor = 0;
+  
+
+    public static final int collectorMotor = 17;
+
     //public static final int leftDriveMotor = 2;
    // public static final int rightDriveMotor = 1;
 	//public static final int leftDriveMotor = 20;
@@ -73,21 +75,28 @@ public class RightStickButtons {
 //	
 //}
 // can comment out gamepad if we don't use it
-	public class GamepadButtons {
-	//	public static final int LXAxisNumbers = 0;
-	//	public static final int LYAxisNumber = 1;
-		public static final int LTriggerNumber = 2;
-		public static final int RTriggerNumber = 3;
-	//	public static final int RXAxisNumber = 4;
-	//	public static final int RYAxisNumber = 5;
+
+public class GamepadButtons {
+	public static final int gamepadPort = 3;
+	public static final int LXAxisNumbers = 0;
+	public static final int LYAxisNumber = 1;
+	public static final int LTriggerNumber = 2;
+	public static final int RTriggerNumber = 3;
+	public static final int RXAxisNumber = 4;
+	public static final int RYAxisNumber = 5;
 	
-	//	public static final int AButtNumber = 0;
-	//	public static final int BButtNumber = 1;
-	//	public static final int XButtNumber = 2;
-	//	public static final int YButtNumber = 3;
-	//	public static final int LBumperNumber = 0;
-	//	public static final int RBumperNumber = 1;
-	}
+	public static final int AButtNumber = 0;
+	public static final int BButtNumber = 1;
+	public static final int XButtNumber = 2;
+	public static final int YButtNumber = 3;
+	public static final int LBumperNumber = 0;
+	public static final int RBumperNumber = 1;
+	
+	
+	
+
+}
+
 }
 
 

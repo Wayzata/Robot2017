@@ -1,15 +1,15 @@
 package org.usfirst.frc.team2264.robot;
 
-import org.usfirst.frc.team2264.robot.OI;
+import org.usfirst.frc.team2264.robot.OI; 
 import org.usfirst.frc.team2264.robot.RobotMap;
+import org.usfirst.frc.team2264.robot.RobotMap.GamepadButtons;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+ 
 import java.math.*;
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +26,8 @@ public class Robot extends IterativeRobot {
 	OI oi;
 	CANTalon left;
 	CANTalon right;
+	Gamepad gamepad;
+	BallPickup pickup;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	double speedAdjustment=.65;
 
@@ -42,7 +44,8 @@ public class Robot extends IterativeRobot {
 		oi= new OI();
 		left= new CANTalon(RobotMap.leftDriveMotor);
 		right= new CANTalon(RobotMap.rightDriveMotor);
-
+		gamepad= new Gamepad(RobotMap.GamepadButtons.gamepadPort);
+		pickup = new BallPickup();
 	}
 
 	/**
@@ -95,6 +98,9 @@ public class Robot extends IterativeRobot {
 		double rightReading = oi.getRightJoystick();
 		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
+if (gamepad.getRawButton(RobotMap.GamepadButtons.AButtNumber)){
+	pickup.TakeButtonPress();
+}
 
 		//drive.tankDrive(oi.leftStick.getY(),oi.rightStick.getY());
 	}
