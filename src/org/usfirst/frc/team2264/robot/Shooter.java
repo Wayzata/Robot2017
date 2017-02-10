@@ -1,32 +1,37 @@
 package org.usfirst.frc.team2264.robot;
 
 import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 public class Shooter {
 	
 	CANTalon shooterMotor;
 	CANTalon feederMotor;
-	Button rTrigger;
-	Button lTrigger;
+
+ControllerButtons buttons;
 	
-	public void ShooterInit(){
+	public Shooter(){
+		
+		
 		shooterMotor = new CANTalon(RobotMap.shooterMotor);
 		feederMotor = new CANTalon(RobotMap.feederMotor);
-		rTrigger = new Button(RobotMap.GamepadButtons.RTriggerNumber);
-		lTrigger = new Button(RobotMap.GamepadButtons.LTriggerNumber);
+		shooterMotor.setPID(1, 0, 0);
+		
 	}
-	
-	public void MotorOn(){
-		if (rTrigger){
+
+	public void ShooterMotorOn(boolean pressed){
+		if (pressed){
 			shooterMotor.set(.5);
+			
 		}
 		else{
 			shooterMotor.set(0);
 		}
 	}
-	public void helperOn(){
-		if (lTrigger){
+	public void FeederMotorOn(boolean pressed){
+		if (pressed){
 			feederMotor.set(.5);
 		}
 		else{

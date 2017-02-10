@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2264.robot;
 
-import org.usfirst.frc.team2264.robot.Gamepad;
+//import org.usfirst.frc.team2264.robot.Gamepad; 
 import edu.wpi.first.wpilibj.GamepadBase;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
@@ -17,6 +17,7 @@ public class BallPickup extends Button {
 	CANTalon pickupMotor;
 	Button toggle;
 	boolean motoroff;
+	int PickupMotorSpeed=1;
 public BallPickup(){
 	
 	
@@ -30,15 +31,17 @@ public void start(){
 
 	
 	}
-public void TakeButtonPress(){
-		motoroff = (!motoroff);
-	if(motoroff){
+public void Motoroff(){
+
 	pickupMotor.set(0);
 	}
-	else{
-		pickupMotor.set(.5);
-	}
+
+public void Motoron(){
+
+pickupMotor.set(PickupMotorSpeed);
+
 }
+
 
 public boolean get() {
 	// TODO Auto-generated method stub
