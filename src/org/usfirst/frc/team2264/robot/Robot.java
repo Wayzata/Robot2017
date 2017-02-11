@@ -23,8 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
+	final String driveForward = "Drive Forward";
+	final String gearAuto = "Gear Auto";
 	String autoSelected;
 	RobotDrive drive;
 	OI oi;
@@ -45,14 +45,16 @@ public class Robot extends IterativeRobot {
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
+	int slowRange=4;//inches
+	boolean dangerRange;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		chooser.addDefault("Drive Forward", driveForward);
+		chooser.addObject("Gear Auto", gearAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		left= new CANTalon(RobotMap.leftDriveMotor);
 		right= new CANTalon(RobotMap.rightDriveMotor);
@@ -85,6 +87,7 @@ public class Robot extends IterativeRobot {
 		autoSelected = chooser.getSelected();
 		this.autonomousStartTime = System.currentTimeMillis();
 		System.out.println("Auto selected: " + autoSelected);
+		
 	}
 
 	/**
@@ -92,17 +95,22 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		//dangerRange=(ultrasonic.getDistance<=slowRange)
 		switch (autoSelected) {
-		case customAuto:
+		case gearAuto:
+			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
+			if(((timeInAuto>=1000)&&timeInAuto<=2500)){
+				auton.gearAuto(left,right,dangerRange);
+			}	
 			// Put custom auto code here
 			break;
-		case defaultAuto:
+		case driveForward:
 		default:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
 			if((timeInAuto>=1000)&&timeInAuto<=2500){
 				auton.DriveForward(left, right);
 			}
-			else if(timeInAuto>2500){
+			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
 				auton.TurnRight(left, right);
 			}
 			// Put default auto code here
