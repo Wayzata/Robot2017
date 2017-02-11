@@ -35,6 +35,7 @@ public class Robot extends IterativeRobot {
 	BallPickup pickup;
 	Winch winch;
 	SendableChooser<String> chooser = new SendableChooser<>();
+	UltrasonicSensor ultrasonicSensor;
 	double speedAdjustment=.65;
 	boolean onButton;
 	boolean offButton;
@@ -51,6 +52,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		ultrasonicSensor = new UltrasonicSensor();
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
@@ -108,9 +110,11 @@ public class Robot extends IterativeRobot {
 			// Put default auto code here
 			//if (time i
 			break;
+			
 		}
 	}
 
+	
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -135,7 +139,7 @@ public class Robot extends IterativeRobot {
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 		debug=2;
 	
-			
+		SmartDashboard.putNumber("getAverageFeet", ultrasonicSensor.getAverageFeet()); 
 		
 		if (onButton){
 			debug=3;
