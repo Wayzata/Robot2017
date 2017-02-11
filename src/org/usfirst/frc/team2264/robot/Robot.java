@@ -4,7 +4,7 @@
  */
 package org.usfirst.frc.team2264.robot;
 
-import org.usfirst.frc.team2264.robot.OI;  
+import org.usfirst.frc.team2264.robot.OI; 
 import org.usfirst.frc.team2264.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import xyz.remexre.robotics.frc2016.controls.Controls;
+//import xyz.remexre.robotics.frc2016.controls.Controls;
 
 /**
  * The VM is configured to automatically run this class, and to call the
