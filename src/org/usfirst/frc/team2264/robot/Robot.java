@@ -99,8 +99,11 @@ public class Robot extends IterativeRobot {
 		case defaultAuto:
 		default:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
-			if((timeInAuto>=3000)&&timeInAuto<=3500){
+			if((timeInAuto>=1000)&&timeInAuto<=2500){
 				auton.DriveForward(left, right);
+			}
+			else if(timeInAuto>2500){
+				auton.TurnRight(left, right);
 			}
 			// Put default auto code here
 			//if (time i
