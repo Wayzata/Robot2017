@@ -1,3 +1,8 @@
+/**
+ * @author DrakeJohnson
+ * @author LexieMcfann
+ *
+ */
 package org.usfirst.frc.team2264.robot;
 
 
@@ -13,7 +18,7 @@ public class RobotMap {
 	
 	  public static final int shooterMotor = 16;
 	  public static final int feederMotor = 15;
-  
+  public static final int WinchMotor=0;
 
     public static final int collectorMotor = 17;
 

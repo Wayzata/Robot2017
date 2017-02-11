@@ -1,3 +1,8 @@
+/**
+ * @author DrakeJohnson
+ * @author LexieMcfann
+ *
+ */
 package org.usfirst.frc.team2264.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;

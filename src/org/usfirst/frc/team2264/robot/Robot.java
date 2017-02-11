@@ -1,3 +1,7 @@
+/**
+ * @author preetipidatala
+ *
+ */
 package org.usfirst.frc.team2264.robot;
 
 import org.usfirst.frc.team2264.robot.OI;  
@@ -9,6 +13,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import xyz.remexre.robotics.frc2016.controls.Controls;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,12 +33,18 @@ public class Robot extends IterativeRobot {
 	Shooter shooter;
 	ControllerButtons buttons;
 	BallPickup pickup;
+	Winch winch;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	double speedAdjustment=.65;
 	boolean onButton;
 	boolean offButton;
-	boolean lTriggerPressed;
-	boolean rTriggerPressed;
+	boolean lBumperPressed;
+	boolean rBumperPressed;
+	boolean winchTriggerPressed;
+	boolean WinchLimit;
+	long autonomousStartTime;
+	long timeInAuto;
+	auto auton;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -48,11 +59,13 @@ public class Robot extends IterativeRobot {
 		drive= new RobotDrive(left,right);
 		oi= new OI();
 		buttons = new ControllerButtons(RobotMap.GamepadButtons.gamepadPort);
-		
+		WinchLimit=false;
 		pickup = new BallPickup();
 		shooter = new Shooter();
-		
+		winch = new Winch();
+		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
+		
 
 	}
 
@@ -70,7 +83,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
-		
+		this.autonomousStartTime = System.currentTimeMillis();
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
@@ -85,7 +98,12 @@ public class Robot extends IterativeRobot {
 			break;
 		case defaultAuto:
 		default:
+			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
+			if((timeInAuto>=3000)&&timeInAuto<=3500){
+				auton.DriveForward(left, right);
+			}
 			// Put default auto code here
+			//if (time i
 			break;
 		}
 	}
@@ -99,20 +117,23 @@ public class Robot extends IterativeRobot {
 	
 		onButton=buttons.getAButton();
 		offButton=buttons.getYButton();
-		lTriggerPressed=buttons.getBumper(Hand.kRight);
-		rTriggerPressed=buttons.getBumper(Hand.kLeft);
+		lBumperPressed=buttons.getBumper(Hand.kRight);
+		rBumperPressed=buttons.getBumper(Hand.kLeft);
+		winchTriggerPressed= buttons.getXButton();
 		SmartDashboard.putNumber("JoystickR", RobotMap.rightStickPort);  
 		SmartDashboard.putNumber("JoystickL", RobotMap.leftStickPort);
 		SmartDashboard.putNumber("left speed", oi.leftStick.getY());
 		SmartDashboard.putNumber("right speed", oi.rightStick.getY());
 		SmartDashboard.putBoolean("motor off", pickup.motoroff);
-		
+	
 		double leftReading = oi.getLeftJoystick();
 		double rightReading = oi.getRightJoystick();
 		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 		debug=2;
 	
+			
+		
 		if (onButton){
 			debug=3;
 			pickup.Motoron();	
@@ -121,9 +142,12 @@ public class Robot extends IterativeRobot {
 			debug=4;
 			pickup.Motoroff();	
 		}
-		shooter.ShooterMotorOn(lTriggerPressed);
-		shooter.FeederMotorOn(rTriggerPressed);
+		shooter.ShooterMotorOn(lBumperPressed);
+		shooter.FeederMotorOn(rBumperPressed);
+		winch.motorOn(winchTriggerPressed);
 
+
+		
 System.out.println(debug);
 	
 	}
