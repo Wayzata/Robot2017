@@ -23,8 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
+	final String driveForward = "Drive Forward";
+	final String gearAuto = "Gear Auto";
 	String autoSelected;
 	RobotDrive drive;
 	OI oi;
@@ -46,6 +46,8 @@ public class Robot extends IterativeRobot {
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
+	int slowRange=4;//inches
+	boolean dangerRange;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -53,8 +55,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		ultrasonicSensor = new UltrasonicSensor();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		chooser.addDefault("Drive Forward", driveForward);
+		chooser.addObject("Gear Auto", gearAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		left= new CANTalon(RobotMap.leftDriveMotor);
 		right= new CANTalon(RobotMap.rightDriveMotor);
@@ -67,7 +69,7 @@ public class Robot extends IterativeRobot {
 		winch = new Winch();
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
-		
+
 
 	}
 
@@ -87,6 +89,7 @@ public class Robot extends IterativeRobot {
 		autoSelected = chooser.getSelected();
 		this.autonomousStartTime = System.currentTimeMillis();
 		System.out.println("Auto selected: " + autoSelected);
+
 	}
 
 	/**
@@ -94,34 +97,39 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		//dangerRange=(ultrasonic.getDistance<=slowRange)
 		switch (autoSelected) {
-		case customAuto:
+		case gearAuto:
+			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
+			if(((timeInAuto>=1000)&&timeInAuto<=2500)){
+				auton.gearAuto(left,right,dangerRange);
+			}	
 			// Put custom auto code here
 			break;
-		case defaultAuto:
+		case driveForward:
 		default:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
 			if((timeInAuto>=1000)&&timeInAuto<=2500){
 				auton.DriveForward(left, right);
 			}
-			else if(timeInAuto>2500){
+			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
 				auton.TurnRight(left, right);
 			}
 			// Put default auto code here
 			//if (time i
 			break;
-			
+
 		}
 	}
 
-	
+
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		int debug=1;
-	
+
 		onButton=buttons.getAButton();
 		offButton=buttons.getYButton();
 		lBumperPressed=buttons.getBumper(Hand.kRight);
@@ -132,15 +140,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("left speed", oi.leftStick.getY());
 		SmartDashboard.putNumber("right speed", oi.rightStick.getY());
 		SmartDashboard.putBoolean("motor off", pickup.motoroff);
-	
+
 		double leftReading = oi.getLeftJoystick();
 		double rightReading = oi.getRightJoystick();
 		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 		debug=2;
-	
+
 		SmartDashboard.putNumber("getAverageFeet", ultrasonicSensor.getAverageFeet()); 
-		
+
 		if (onButton){
 			debug=3;
 			pickup.Motoron();	
@@ -154,9 +162,9 @@ public class Robot extends IterativeRobot {
 		winch.motorOn(winchTriggerPressed);
 
 
-		
-System.out.println(debug);
-	
+
+		System.out.println(debug);
+
 	}
 
 	/**
