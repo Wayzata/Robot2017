@@ -35,6 +35,7 @@ public class Robot extends IterativeRobot {
 	BallPickup pickup;
 	Winch winch;
 	SendableChooser<String> chooser = new SendableChooser<>();
+	UltrasonicSensor ultrasonicSensor;
 	double speedAdjustment=.65;
 	boolean onButton;
 	boolean offButton;
@@ -56,6 +57,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		ultrasonicSensor = new UltrasonicSensor();
 		chooser.addDefault("Drive Forward", driveForward);
 		chooser.addObject("Gear Auto", gearAuto);
 		SmartDashboard.putData("Auto choices", chooser);
@@ -71,6 +73,7 @@ public class Robot extends IterativeRobot {
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
+
 
 	}
 
@@ -119,8 +122,10 @@ public class Robot extends IterativeRobot {
 			// Put default auto code here
 			//if (time i
 			break;
+
 		}
 	}
+
 
 	/**
 	 * This function is called periodically during operator control
@@ -128,7 +133,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		ReadButtons();
-		tele.SmartDashboardOutputs(oi, pickup);
+		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor);
 		DriveTrainMotor();
 		BallPickupOnOff();
 		shooter.ShooterMotorOn(lBumperPressed);
@@ -152,7 +157,6 @@ public class Robot extends IterativeRobot {
 		rightReading = oi.getRightJoystick();
 	}
 	public void BallPickupOnOff(){
-
 		if (onButton){
 			pickup.Motoron();	
 		}
