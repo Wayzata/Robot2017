@@ -22,33 +22,33 @@ public class BallPickup extends Button {
 	Button toggle;
 	boolean motoroff;
 	int PickupMotorSpeed=1;
-public BallPickup(){
-	
-	
-pickupMotor= new CANTalon(RobotMap.collectorMotor);
+	public BallPickup(){
 
-motoroff=true;
-//toggle=new XboxController. (RobotMap.GamepadButtons.AButtNumber);
-}
 
-public void start(){
+		pickupMotor= new CANTalon(RobotMap.collectorMotor);
 
-	
-	}
-public void Motoroff(){
-
-	pickupMotor.set(0);
+		motoroff=true;
+		//toggle=new XboxController. (RobotMap.GamepadButtons.AButtNumber);
 	}
 
-public void Motoron(){
-
-pickupMotor.set(PickupMotorSpeed);
-
-}
+	public void start(){
 
 
-public boolean get() {
-	// TODO Auto-generated method stub
-	return false;
-}
+	}
+	public void Motoroff(){
+
+		pickupMotor.set(0);
+	}
+
+	public void Motoron(){
+
+		pickupMotor.set(PickupMotorSpeed);
+
+	}
+
+
+	public boolean get() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

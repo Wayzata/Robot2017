@@ -8,7 +8,7 @@ package org.usfirst.frc.team2264.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class JoystickSensetivities {
-	
+
 	//makes acceleration parabolic
 	public static double sensitivityAdjustment(double position){
 		double adjustment =Math.pow(position, 2);

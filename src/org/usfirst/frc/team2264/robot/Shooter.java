@@ -10,25 +10,25 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 public class Shooter {
-	
+
 	CANTalon shooterMotor;
 	CANTalon feederMotor;
 
-ControllerButtons buttons;
-	
+	ControllerButtons buttons;
+
 	public Shooter(){
-		
-		
+
+
 		shooterMotor = new CANTalon(RobotMap.shooterMotor);
 		feederMotor = new CANTalon(RobotMap.feederMotor);
 		shooterMotor.setPID(1, 0, 0);
-		
+
 	}
 
 	public void ShooterMotorOn(boolean pressed){
 		if (pressed){
 			shooterMotor.set(.5);
-			
+
 		}
 		else{
 			shooterMotor.set(0);

@@ -42,11 +42,14 @@ public class Robot extends IterativeRobot {
 	boolean rBumperPressed;
 	boolean winchTriggerPressed;
 	boolean WinchLimit;
+	double leftReading;
+	double rightReading;
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
 	int slowRange=4;//inches
 	boolean dangerRange;
+	Teleop tele;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -67,7 +70,7 @@ public class Robot extends IterativeRobot {
 		winch = new Winch();
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
-		
+		tele= new Teleop();
 
 	}
 
@@ -87,7 +90,7 @@ public class Robot extends IterativeRobot {
 		autoSelected = chooser.getSelected();
 		this.autonomousStartTime = System.currentTimeMillis();
 		System.out.println("Auto selected: " + autoSelected);
-		
+
 	}
 
 	/**
@@ -124,43 +127,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		int debug=1;
-	
-		onButton=buttons.getAButton();
-		offButton=buttons.getYButton();
-		lBumperPressed=buttons.getBumper(Hand.kRight);
-		rBumperPressed=buttons.getBumper(Hand.kLeft);
-		winchTriggerPressed= buttons.getXButton();
-		SmartDashboard.putNumber("JoystickR", RobotMap.rightStickPort);  
-		SmartDashboard.putNumber("JoystickL", RobotMap.leftStickPort);
-		SmartDashboard.putNumber("left speed", oi.leftStick.getY());
-		SmartDashboard.putNumber("right speed", oi.rightStick.getY());
-		SmartDashboard.putBoolean("motor off", pickup.motoroff);
-	
-		double leftReading = oi.getLeftJoystick();
-		double rightReading = oi.getRightJoystick();
-		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
-		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
-		debug=2;
-	
-			
-		
-		if (onButton){
-			debug=3;
-			pickup.Motoron();	
-		}
-		else if(offButton){
-			debug=4;
-			pickup.Motoroff();	
-		}
+		ReadButtons();
+		tele.SmartDashboardOutputs(oi, pickup);
+		DriveTrainMotor();
+		BallPickupOnOff();
 		shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
-		winch.motorOn(winchTriggerPressed);
-
-
-		
-System.out.println(debug);
-	
+		winch.motorOn(winchTriggerPressed);	
 	}
 
 	/**
@@ -168,6 +141,29 @@ System.out.println(debug);
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	public void ReadButtons(){
+		onButton=buttons.getAButton();
+		offButton=buttons.getYButton();
+		lBumperPressed=buttons.getBumper(Hand.kRight);
+		rBumperPressed=buttons.getBumper(Hand.kLeft);
+		winchTriggerPressed= buttons.getXButton();
+		leftReading = oi.getLeftJoystick();
+		rightReading = oi.getRightJoystick();
+	}
+	public void BallPickupOnOff(){
+
+		if (onButton){
+			pickup.Motoron();	
+		}
+		else if(offButton){
+			pickup.Motoroff();	
+		}
+	}
+	public void DriveTrainMotor(){
+
+		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
+		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 	}
 }
 

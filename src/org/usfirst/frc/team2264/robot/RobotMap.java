@@ -13,35 +13,35 @@ package org.usfirst.frc.team2264.robot;
  * floating around.
  */
 public class RobotMap {
-    // For example to map the left and right motors, you could define the
-    // following variables to use with your drivetrain subsystem.
-	
-	  public static final int shooterMotor = 16;
-	  public static final int feederMotor = 15;
-  public static final int WinchMotor=0;
+	// For example to map the left and right motors, you could define the
+	// following variables to use with your drivetrain subsystem.
 
-    public static final int collectorMotor = 17;
+	public static final int shooterMotor = 16;
+	public static final int feederMotor = 15;
+	public static final int WinchMotor=0;
+
+	public static final int collectorMotor = 17;
 
 	//public static final int leftDriveMotor = 20;
 	public static final int leftDriveMotor = 18;
-	   public static final int rightDriveMotor = 19;
- //   public static final int ropeMotorLeft = 0;
-   // public static final int ropeMotorRight = 0;
-    
-    public static final int rightStickPort = 0;
-    public static final int leftStickPort = 1;
-//    public static final int gamepadNumber = 2;
-//    public static final int XboxController = 2; 
-    // If you are using multiple modules, make sure to define both the port
-    // number and the module. For example you with a rangefinder:
-    // public static int rangefinderPort = 1;
-    // public static int rangefinderModule = 1;
-public class RightStickButtons {
-//	public static final int RXAxis = 0;
-//	public static final int RYAxis = 1;
-//	public static final int RZAxis = 2;
-//	public static final int RZRotate =3;
-	
+	public static final int rightDriveMotor = 19;
+	//   public static final int ropeMotorLeft = 0;
+	// public static final int ropeMotorRight = 0;
+
+	public static final int rightStickPort = 0;
+	public static final int leftStickPort = 1;
+	//    public static final int gamepadNumber = 2;
+	//    public static final int XboxController = 2; 
+	// If you are using multiple modules, make sure to define both the port
+	// number and the module. For example you with a rangefinder:
+	// public static int rangefinderPort = 1;
+	// public static int rangefinderModule = 1;
+	public class RightStickButtons {
+		//	public static final int RXAxis = 0;
+		//	public static final int RYAxis = 1;
+		//	public static final int RZAxis = 2;
+		//	public static final int RZRotate =3;
+
 
 //	
 //    public static final int RtopRightButtNumber = 4;
