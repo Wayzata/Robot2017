@@ -141,6 +141,8 @@ public class Robot extends IterativeRobot {
 		shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
 		winch.motorOn(winchTriggerPressed);	
+		tele.EasyMoveBackward(left, right, oi.leftStick);
+		tele.EasyMoveForward(left, right, oi.rightStick);
 	}
 
 	/**
