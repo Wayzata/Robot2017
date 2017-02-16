@@ -30,4 +30,5 @@ public class auto {
 			right.set(slowMult*motorPower);
 		}
 	}
+	
 }

@@ -18,7 +18,9 @@ public class UltrasonicSensor {
 
 	
 
-	
+	public void resetUltraSonic(){
+	SensorAnalog.resetAccumulator();
+	}
 	
 	//public int getAverageValue(){
 		public double getAverageFeet(){

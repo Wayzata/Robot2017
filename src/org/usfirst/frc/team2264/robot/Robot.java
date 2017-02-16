@@ -4,6 +4,8 @@
  */
 package org.usfirst.frc.team2264.robot;
 
+import java.awt.Color;
+
 import org.usfirst.frc.team2264.robot.OI; 
 import org.usfirst.frc.team2264.robot.RobotMap;
 
@@ -11,6 +13,7 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import xyz.remexre.robotics.frc2016.controls.Controls;
@@ -34,7 +37,7 @@ public class Robot extends IterativeRobot {
 	ControllerButtons buttons;
 	BallPickup pickup;
 	Winch winch;
-	SendableChooser<String> chooser = new SendableChooser<>();
+	SendableChooser<String> chooser= new SendableChooser<>();
 	UltrasonicSensor ultrasonicSensor;
 	double speedAdjustment=.65;
 	boolean onButton;
@@ -48,19 +51,22 @@ public class Robot extends IterativeRobot {
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
-	int slowRange=4;//inches
+	int slowRange=3;//feet
 	boolean dangerRange;
 	Teleop tele;
 	/**
+	
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
+		//chooser = new SendableChooser<String>();
 		ultrasonicSensor = new UltrasonicSensor();
 		chooser.addDefault("Drive Forward", driveForward);
 		chooser.addObject("Gear Auto", gearAuto);
 		SmartDashboard.putData("Auto choices", chooser);
+
 		left= new CANTalon(RobotMap.leftDriveMotor);
 		right= new CANTalon(RobotMap.rightDriveMotor);
 		drive= new RobotDrive(left,right);
@@ -72,8 +78,9 @@ public class Robot extends IterativeRobot {
 		winch = new Winch();
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture(1);
 		tele= new Teleop();
-
+	
 
 	}
 
@@ -90,10 +97,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autoSelected = chooser.getSelected();
+		ultrasonicSensor.resetUltraSonic();
+		autoSelected =chooser.getSelected();
 		this.autonomousStartTime = System.currentTimeMillis();
-		System.out.println("Auto selected: " + autoSelected);
-
+		SmartDashboard.putString("Selected", autoSelected);
 	}
 
 	/**
@@ -101,14 +108,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//dangerRange=(ultrasonic.getDistance<=slowRange)
+			dangerRange=(ultrasonicSensor.getAverageFeet()<=slowRange);
 		switch (autoSelected) {
 		case gearAuto:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
 			if(((timeInAuto>=1000)&&timeInAuto<=2500)){
 				auton.gearAuto(left,right,dangerRange);
 			}	
-			// Put custom auto code here
+		
 			break;
 		case driveForward:
 		default:
@@ -133,12 +140,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		ReadButtons();
-		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor);
+		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor,chooser,lBumperPressed);
 		DriveTrainMotor();
 		BallPickupOnOff();
 		shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
 		winch.motorOn(winchTriggerPressed);	
+		getSafeDistance();
+		tele.EasyMoveForward(left,right, oi.rightStick);
+		tele.EasyMoveBackward(left,right, oi.leftStick);
 	}
 
 	/**
@@ -169,5 +179,12 @@ public class Robot extends IterativeRobot {
 		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 	}
+	public void getSafeDistance(){
+		if (ultrasonicSensor.getAverageFeet()<=5){
+			SmartDashboard.putString("Distance From Object", "<5 FEET");
+	}
+		else{
+			SmartDashboard.putString("Distance From Object", "");
+		}
 }
-
+}
