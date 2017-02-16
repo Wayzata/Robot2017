@@ -21,8 +21,9 @@ public class Teleop {
 		SmartDashboard.putBoolean("Shooter Motor On", pressed);
 	}
 public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
+	//these easy move methods simplify the tank drive train by setting both motors to the same speed(essentially moving forward) when the trigger is pressed.
 	if(Rstick.getTrigger()){
-		left.set(-.512);
+		left.set(-.512);// this is set to .512 because the right motor is more powerful than the left motor. If both motors are perfectly balanced, we can left.set(right.getSpeed()); 
 		right.set(-.5);
 	}
 }
@@ -31,6 +32,12 @@ public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
 			left.set(.512);
 			right.set(.5);
 		}
+		/**public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
+	//these easy move methods simplify the tank drive train by setting both motors to the same speed(essentially moving forward) when the trigger is pressed.
+	if(Rstick.getTrigger()){
+		left.set(right.getSpeed());// this is set to .512 because the right motor is more powerful than the left motor. If both motors are perfectly balanced, we can left.set(right.getSpeed()); 
+	}
+}**/
 }
 
 }
