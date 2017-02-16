@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
-SmartDashboard
+
 
 	}
 
@@ -135,7 +135,7 @@ SmartDashboard
 	@Override
 	public void teleopPeriodic() {
 		ReadButtons();
-		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor);
+		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor,chooser,lBumperPressed);
 		DriveTrainMotor();
 		BallPickupOnOff();
 		shooter.ShooterMotorOn(lBumperPressed);
