@@ -27,7 +27,7 @@ public class Shooter {
 
 	public void ShooterMotorOn(boolean pressed){
 		if (pressed){
-			shooterMotor.set(.5);
+			shooterMotor.set(1);
 
 		}
 		else{
@@ -36,7 +36,7 @@ public class Shooter {
 	}
 	public void FeederMotorOn(boolean pressed){
 		if (pressed){
-			feederMotor.set(.5);
+			feederMotor.set(-.5);
 		}
 		else{
 			feederMotor.set(0);

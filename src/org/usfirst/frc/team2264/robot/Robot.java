@@ -169,8 +169,8 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	public void DriveTrainMotor(){
-
-		left.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
+		int rMotorAdjustment=-1;//because one of the motors is backwards
+		left.set(rMotorAdjustment*speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
 	}
 }

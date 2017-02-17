@@ -21,7 +21,7 @@ public class BallPickup extends Button {
 	CANTalon pickupMotor;
 	Button toggle;
 	boolean motoroff;
-	int PickupMotorSpeed=1;
+	int PickupMotorSpeed=-1;
 	public BallPickup(){
 
 

@@ -17,14 +17,14 @@ public class RobotMap {
 	// following variables to use with your drivetrain subsystem.
 
 	public static final int shooterMotor = 16;
-	public static final int feederMotor = 15;
+	public static final int feederMotor = 14;
 	public static final int WinchMotor=0;
 
-	public static final int collectorMotor = 17;
+	public static final int collectorMotor = 15;
 
 	//public static final int leftDriveMotor = 20;
-	public static final int leftDriveMotor = 18;
-	public static final int rightDriveMotor = 19;
+	public static final int leftDriveMotor = 2;
+	public static final int rightDriveMotor = 1;
 	//   public static final int ropeMotorLeft = 0;
 	// public static final int ropeMotorRight = 0;
 
