@@ -27,7 +27,7 @@ public class Shooter {
 
 	public void ShooterMotorOn(boolean pressed){
 		if (pressed){
-			shooterMotor.set(.75);
+			shooterMotor.set(.3);
 
 		}
 		else{

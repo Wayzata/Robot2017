@@ -45,7 +45,9 @@ public class BallPickup extends Button {
 		pickupMotor.set(PickupMotorSpeed);
 
 	}
-
+public void MotorBack(){
+	pickupMotor.set(1);
+}
 
 	public boolean get() {
 		// TODO Auto-generated method stub

@@ -55,6 +55,7 @@ public class Robot extends IterativeRobot {
 	Teleop tele;
 	boolean newShooterOn;
 	boolean newShooterOff;
+	boolean shooterBack;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -111,7 +112,7 @@ public class Robot extends IterativeRobot {
 		switch (autoSelected) {
 		case gearAuto:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
-			if(((timeInAuto>=1000)&&timeInAuto<=2500)){
+			if(((timeInAuto>=1000)&&timeInAuto<=4590)){
 				auton.gearAuto(left,right,dangerRange);
 			}	
 			else{
@@ -126,9 +127,9 @@ public class Robot extends IterativeRobot {
 			if((timeInAuto>=1000)&&timeInAuto<=2500){
 				auton.DriveForward(left, right);
 			}
-			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
-				auton.TurnRight(left, right);
-			}
+//			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
+//				auton.TurnRight(left, right);
+//			}
 			else{
 				left.set(0);
 				right.set(0);
@@ -159,8 +160,11 @@ public class Robot extends IterativeRobot {
 		else if(newShooterOff){
 		winch.motorOff();
 		}
-		//tele.EasyMoveBackward(left, right, oi.leftStick);
+		tele.EasyMoveBackward(left, right, oi.leftStick);
 		tele.EasyMoveForward(left, right, oi.rightStick);
+		if(lBumperPressed){
+			pickup.MotorBack();
+		}
 	}
 
 	/**
@@ -179,6 +183,7 @@ public class Robot extends IterativeRobot {
 		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();
 		rightReading = oi.getRightJoystick();
+		
 	}
 	public void BallPickupOnOff(){
 		if (onButton){

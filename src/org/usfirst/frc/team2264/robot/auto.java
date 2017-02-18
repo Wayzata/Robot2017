@@ -9,7 +9,8 @@ import com.ctre.CANTalon;
 public class auto {
 	//double motorPower=.006;
 	double motorPower=.6;
-	double slowMult=.25;
+	double slowMult=.5;
+	double MotorBalance=.951;// bc the left motor is more powerful
 	public void DriveForward(CANTalon left, CANTalon right){
 
 		left.set(motorPower);
@@ -22,11 +23,11 @@ public class auto {
 	}
 	public void gearAuto(CANTalon left, CANTalon right,boolean danger){
 		if(!danger){
-			left.set(motorPower);
+			left.set(MotorBalance*motorPower);
 			right.set(-1*motorPower);
 		}
 		else if(danger){
-			left.set(slowMult*motorPower);
+			left.set(MotorBalance*slowMult*motorPower);
 			right.set(-1*slowMult*motorPower);
 		}
 	}
