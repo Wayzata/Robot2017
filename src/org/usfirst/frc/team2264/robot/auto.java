@@ -8,12 +8,12 @@ import com.ctre.CANTalon;
 
 public class auto {
 	//double motorPower=.006;
-	double motorPower=.2;
+	double motorPower=.6;
 	double slowMult=.25;
 	public void DriveForward(CANTalon left, CANTalon right){
 
-		left.set(-1*motorPower);
-		right.set(motorPower);
+		left.set(motorPower);
+		right.set(-1*motorPower);
 	}
 	public void TurnRight(CANTalon left, CANTalon right){
 
@@ -22,12 +22,12 @@ public class auto {
 	}
 	public void gearAuto(CANTalon left, CANTalon right,boolean danger){
 		if(!danger){
-			left.set(-1*motorPower);
-			right.set(motorPower);
+			left.set(motorPower);
+			right.set(-1*motorPower);
 		}
 		else if(danger){
-			left.set(-1*slowMult*motorPower);
-			right.set(slowMult*motorPower);
+			left.set(slowMult*motorPower);
+			right.set(-1*slowMult*motorPower);
 		}
 	}
 	

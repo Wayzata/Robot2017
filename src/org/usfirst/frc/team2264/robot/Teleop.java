@@ -21,23 +21,23 @@ public class Teleop {
 		SmartDashboard.putBoolean("Shooter Motor On", pressed);
 	
 	}
-public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
-	//these easy move methods simplify the tank drive train by setting both motors to the same speed(essentially moving forward) when the trigger is pressed.
-	if(Rstick.getTrigger()){
-		left.set(-.5);// this is set to .512 because the right motor is more powerful than the left motor. If both motors are perfectly balanced, we can left.set(right.getSpeed()); 
-		right.set(.5);
-	}
-}
-	public void EasyMoveBackward(CANTalon left,CANTalon right, Joystick Lstick){
-		if(Lstick.getTrigger()){
-			left.set(.5);
-			right.set(-.5);
-		}
-//		public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
+//public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
 //	//these easy move methods simplify the tank drive train by setting both motors to the same speed(essentially moving forward) when the trigger is pressed.
 //	if(Rstick.getTrigger()){
-//		left.set(right.getSpeed());// this is set to .512 because the right motor is more powerful than the left motor. If both motors are perfectly balanced, we can left.set(right.getSpeed()); 
+//		left.set(-.5);// this is set to .512 because the right motor is more powerful than the left motor. If both motors are perfectly balanced, we can left.set(right.getSpeed()); 
+//		right.set(.5);
 //	}
 //}
+//	public void EasyMoveBackward(CANTalon left,CANTalon right, Joystick Lstick){
+//		if(Lstick.getTrigger()){
+//			left.set(.5);
+//			right.set(-.5);
+//		}
+		public void EasyMoveForward(CANTalon left,CANTalon right, Joystick Rstick){
+	//these easy move methods simplify the tank drive train by setting both motors to the same speed(essentially moving forward) when the trigger is pressed.
+	if(Rstick.getTrigger()){
+		left.set(right.getSpeed());// this is set to .512 because the right motor is more powerful than the left motor. If both motors are perfectly balanced, we can left.set(right.getSpeed()); 
 	}
 }
+	}
+

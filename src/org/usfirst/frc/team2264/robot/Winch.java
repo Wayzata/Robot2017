@@ -10,14 +10,22 @@ public class Winch {
 	public Winch(){
 		winchMotor= new CANTalon(RobotMap.WinchMotor);
 	}
-	public void motorOn(boolean pressed){
-		if (pressed){
-			winchMotor.set(.5);
-		}
-		else{
-			winchMotor.set(0);
-		}
+//	public void motorOn(boolean pressed){
+//		if (pressed){
+//			winchMotor.set(1);
+//		}
+//		else{
+//			winchMotor.set(0);
+//		}
+//	}
+	public void motorOn(){
+
+			winchMotor.set(1);
 	}
+	public void motorOff(){
+
+		winchMotor.set(0);
+}
 	public void motorLimit(boolean limit){
 		if (limit){
 			winchMotor.disableControl();

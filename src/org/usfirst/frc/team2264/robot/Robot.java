@@ -53,6 +53,8 @@ public class Robot extends IterativeRobot {
 	int slowRange=4;//inches
 	boolean dangerRange;
 	Teleop tele;
+	boolean newShooterOn;
+	boolean newShooterOff;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -103,13 +105,19 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//dangerRange=(ultrasonic.getDistance<=slowRange)
+		SmartDashboard.putNumber("distance", ultrasonicSensor.getAverageFeet());
+		SmartDashboard.putNumber("TimeINAUTO", System.currentTimeMillis()-autonomousStartTime);
+		dangerRange=(ultrasonicSensor.getAverageFeet()<=slowRange);
 		switch (autoSelected) {
 		case gearAuto:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
 			if(((timeInAuto>=1000)&&timeInAuto<=2500)){
 				auton.gearAuto(left,right,dangerRange);
 			}	
+			else{
+				left.set(0);
+				right.set(0);
+			}
 			// Put custom auto code here
 			break;
 		case driveForward:
@@ -120,6 +128,10 @@ public class Robot extends IterativeRobot {
 			}
 			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
 				auton.TurnRight(left, right);
+			}
+			else{
+				left.set(0);
+				right.set(0);
 			}
 			// Put default auto code here
 			//if (time i
@@ -140,8 +152,14 @@ public class Robot extends IterativeRobot {
 		BallPickupOnOff();
 		shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
-		winch.motorOn(winchTriggerPressed);	
-		tele.EasyMoveBackward(left, right, oi.leftStick);
+		//winch.motorOn(winchTriggerPressed);
+		if(newShooterOn){
+		winch.motorOn();
+		}
+		else if(newShooterOff){
+		winch.motorOff();
+		}
+		//tele.EasyMoveBackward(left, right, oi.leftStick);
 		tele.EasyMoveForward(left, right, oi.rightStick);
 	}
 
@@ -156,7 +174,9 @@ public class Robot extends IterativeRobot {
 		offButton=buttons.getYButton();
 		lBumperPressed=buttons.getBumper(Hand.kRight);
 		rBumperPressed=buttons.getBumper(Hand.kLeft);
-		winchTriggerPressed= buttons.getXButton();
+		//winchTriggerPressed= buttons.getXButton();
+		newShooterOn=buttons.getXButton();
+		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();
 		rightReading = oi.getRightJoystick();
 	}

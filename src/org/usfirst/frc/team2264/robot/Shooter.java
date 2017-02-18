@@ -21,13 +21,13 @@ public class Shooter {
 
 		shooterMotor = new CANTalon(RobotMap.shooterMotor);
 		feederMotor = new CANTalon(RobotMap.feederMotor);
-		shooterMotor.setPID(1, 0, 0);
+		//shooterMotor.setPID(1, 0, 0);
 
 	}
 
 	public void ShooterMotorOn(boolean pressed){
 		if (pressed){
-			shooterMotor.set(1);
+			shooterMotor.set(.75);
 
 		}
 		else{
