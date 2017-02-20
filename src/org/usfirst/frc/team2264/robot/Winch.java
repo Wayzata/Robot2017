@@ -9,6 +9,7 @@ public class Winch {
 	CANTalon winchMotor;
 	public Winch(){
 		winchMotor= new CANTalon(RobotMap.WinchMotor);
+		winchMotor.setPID(1, 0, 0);
 	}
 //	public void motorOn(boolean pressed){
 //		if (pressed){

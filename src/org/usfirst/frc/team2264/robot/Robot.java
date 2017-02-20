@@ -47,6 +47,7 @@ public class Robot extends IterativeRobot {
 	boolean WinchLimit;
 	double leftReading;
 	double rightReading;
+	WinchOn winchon;
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
@@ -56,6 +57,8 @@ public class Robot extends IterativeRobot {
 	boolean newShooterOn;
 	boolean newShooterOff;
 	boolean shooterBack;
+	int WinchMotorOnButt=3;
+	int WinchMotorOffButt=2;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -78,7 +81,7 @@ public class Robot extends IterativeRobot {
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
-
+		winchon= new WinchOn(oi.rightStick, WinchMotorOnButt);
 
 	}
 
@@ -151,7 +154,7 @@ public class Robot extends IterativeRobot {
 		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor,chooser,lBumperPressed);
 		DriveTrainMotor();
 		BallPickupOnOff();
-		shooter.ShooterMotorOn(lBumperPressed);
+		//shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
 		//winch.motorOn(winchTriggerPressed);
 		if(newShooterOn){
