@@ -48,6 +48,7 @@ public class Robot extends IterativeRobot {
 	boolean WinchLimit;
 	double leftReading;
 	double rightReading;
+	WinchOn winchon;
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
@@ -57,6 +58,8 @@ public class Robot extends IterativeRobot {
 	boolean newShooterOn;
 	boolean newShooterOff;
 	boolean shooterBack;
+	int WinchMotorOnButt=3;
+	int WinchMotorOffButt=2;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -79,6 +82,7 @@ public class Robot extends IterativeRobot {
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
+
 
 	}
 
@@ -179,7 +183,7 @@ public class Robot extends IterativeRobot {
 		offButton=buttons.getYButton();
 		lBumperPressed=buttons.getBumper(Hand.kRight);
 		rBumperPressed=buttons.getBumper(Hand.kLeft);
-		winchTriggerPressed= ;
+	//winchTriggerPressed= ;
 		newShooterOn=buttons.getXButton();
 		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();

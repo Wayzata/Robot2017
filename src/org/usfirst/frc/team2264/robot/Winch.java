@@ -9,7 +9,9 @@ public class Winch {//class for the NEW SHOOTER
 	CANTalon winchMotor;
 	public Winch(){
 		winchMotor= new CANTalon(RobotMap.WinchMotor);
-	//	winchMotor.setPID(1, 0, 0);
+
+		winchMotor.setPID(1, 0, 0);
+
 	}
 	public void motorOn(boolean pressed){
 		if (pressed){
