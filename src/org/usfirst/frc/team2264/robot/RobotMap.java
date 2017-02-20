@@ -16,9 +16,9 @@ public class RobotMap {
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
 
-	public static final int shooterMotor = 0;
+	public static final int shooterMotor = 16;
 	public static final int feederMotor = 14;
-	public static final int WinchMotor=16;
+	public static final int WinchMotor=0;
 
 	public static final int collectorMotor = 15;
 

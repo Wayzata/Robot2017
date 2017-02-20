@@ -36,6 +36,7 @@ public class Robot extends IterativeRobot {
 	ControllerButtons buttons;
 	BallPickup pickup;
 	Winch winch;
+	
 	SendableChooser<String> chooser = new SendableChooser<>();
 	UltrasonicSensor ultrasonicSensor;
 	double speedAdjustment=.65;
@@ -78,7 +79,6 @@ public class Robot extends IterativeRobot {
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
-
 
 	}
 
@@ -151,14 +151,14 @@ public class Robot extends IterativeRobot {
 		tele.SmartDashboardOutputs(oi, pickup,ultrasonicSensor,chooser,lBumperPressed);
 		DriveTrainMotor();
 		BallPickupOnOff();
-		shooter.ShooterMotorOn(lBumperPressed);
+		//shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
-		//winch.motorOn(winchTriggerPressed);
+		winch.motorOn(winchTriggerPressed);
 		if(newShooterOn){
-		winch.motorOn();
+		shooter.motorOn();
 		}
 		else if(newShooterOff){
-		winch.motorOff();
+		shooter.motorOff();
 		}
 		tele.EasyMoveBackward(left, right, oi.leftStick);
 		tele.EasyMoveForward(left, right, oi.rightStick);
@@ -172,13 +172,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	
 	}
 	public void ReadButtons(){
 		onButton=buttons.getAButton();
 		offButton=buttons.getYButton();
 		lBumperPressed=buttons.getBumper(Hand.kRight);
 		rBumperPressed=buttons.getBumper(Hand.kLeft);
-		//winchTriggerPressed= buttons.getXButton();
+		winchTriggerPressed= ;
 		newShooterOn=buttons.getXButton();
 		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();

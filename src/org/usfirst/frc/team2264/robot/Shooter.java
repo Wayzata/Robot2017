@@ -21,22 +21,30 @@ public class Shooter {
 
 		shooterMotor = new CANTalon(RobotMap.shooterMotor);
 		feederMotor = new CANTalon(RobotMap.feederMotor);
-		//shooterMotor.setPID(1, 0, 0);
+		shooterMotor.setPID(1, 0, 0);
 
 	}
+//
+//	public void ShooterMotorOn(boolean pressed){
+//		if (pressed){
+//			shooterMotor.set(.2);
+//
+//		}
+//		else{
+//			shooterMotor.set(0);
+//		}
+//	}
+	public void motorOn(){
 
-	public void ShooterMotorOn(boolean pressed){
-		if (pressed){
-			shooterMotor.set(.3);
+		shooterMotor.set(.8);
+}
+public void motorOff(){
 
-		}
-		else{
-			shooterMotor.set(0);
-		}
-	}
+	shooterMotor.set(0);
+}
 	public void FeederMotorOn(boolean pressed){
 		if (pressed){
-			feederMotor.set(-.5);
+			feederMotor.set(-.9);
 		}
 		else{
 			feederMotor.set(0);
