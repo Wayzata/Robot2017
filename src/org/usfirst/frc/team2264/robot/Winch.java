@@ -13,22 +13,22 @@ public class Winch {//class for the NEW SHOOTER
 		winchMotor.setPID(1, 0, 0);
 
 	}
-	public void motorOn(boolean pressed){
-		if (pressed){
-			winchMotor.set(.75);
-		}
-		else{
-			winchMotor.set(0);
-		}
-	}
-//	public void motorOn(){
-//
-//			winchMotor.set(.8);
+//	public void motorOn(boolean pressed){
+//		if (pressed){
+//			winchMotor.set(.75);
+//		}
+//		else{
+//			winchMotor.set(0);
+//		}
 //	}
-//	public void motorOff(){
-//
-//		winchMotor.set(0);
-//}
+	public void motorOn(){
+
+			winchMotor.set(.8);
+	}
+	public void motorOff(){
+
+		winchMotor.set(0);
+}
 	public void motorLimit(boolean limit){
 		if (limit){
 			winchMotor.disableControl();

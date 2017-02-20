@@ -49,6 +49,7 @@ public class Robot extends IterativeRobot {
 	double leftReading;
 	double rightReading;
 	WinchOn winchon;
+	WinchOff winchoff;
 	long autonomousStartTime;
 	long timeInAuto;
 	auto auton;
@@ -60,6 +61,8 @@ public class Robot extends IterativeRobot {
 	boolean shooterBack;
 	int WinchMotorOnButt=3;
 	int WinchMotorOffButt=2;
+	boolean winchOn;
+	boolean winchOff;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -82,7 +85,8 @@ public class Robot extends IterativeRobot {
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
-
+		winchon= new WinchOn(oi.rightStick, WinchMotorOnButt);
+		winchoff= new WinchOff(oi.rightStick, WinchMotorOffButt);
 
 	}
 
@@ -157,18 +161,12 @@ public class Robot extends IterativeRobot {
 		BallPickupOnOff();
 		//shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
-		winch.motorOn(winchTriggerPressed);
-		if(newShooterOn){
-		shooter.motorOn();
-		}
-		else if(newShooterOff){
-		shooter.motorOff();
-		}
+		//winch.motorOn(winchTriggerPressed);
+		winch();
+		Shooter();
 		tele.EasyMoveBackward(left, right, oi.leftStick);
 		tele.EasyMoveForward(left, right, oi.rightStick);
-		if(lBumperPressed){
-			pickup.MotorBack();
-		}
+		ballMotorBack();
 	}
 
 	/**
@@ -188,6 +186,10 @@ public class Robot extends IterativeRobot {
 		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();
 		rightReading = oi.getRightJoystick();
+		winchOn= winchon.get();
+		winchOff= winchoff.get();
+		
+		
 		
 	}
 	public void BallPickupOnOff(){
@@ -202,6 +204,27 @@ public class Robot extends IterativeRobot {
 		int rMotorAdjustment=-1;//because one of the motors is backwards
 		left.set(rMotorAdjustment*speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getLeft(leftReading, rightReading)));
 		right.set(speedAdjustment*JoystickSensetivities.sensitivityAdjustment(JoystickSensetivities.getRight(leftReading, rightReading)));
+	}
+	public void Shooter(){
+		if(newShooterOn){
+			winch.motorOn();
+			}
+			else if(newShooterOff){
+			winch.motorOff();
+			}
+	}
+	public void ballMotorBack(){
+		if(lBumperPressed){
+			pickup.MotorBack();
+		}
+	}
+	public void winch(){
+		if (winchOn){
+			winch.motorOn();
+		}
+		else if(winchOff){
+			winch.motorOff();
+		}
 	}
 }
 
