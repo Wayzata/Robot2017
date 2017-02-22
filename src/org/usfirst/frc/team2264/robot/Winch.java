@@ -21,10 +21,21 @@ public class Winch {//class for the NEW SHOOTER
 //			winchMotor.set(0);
 //		}
 //	}
-	public void motorOn(){
-
-			winchMotor.set(.8);
+	public void motorOnTurn(boolean left){
+		long time=System.currentTimeMillis();
+		if(left){
+winchMotor.set(.8);
+		}
+		else{
+			motorOnTurnR();
+		}
+	while((time<System.currentTimeMillis())&&(System.currentTimeMillis()<time+50)){
+		motorOff();
 	}
+	}
+	public void motorOnTurnR(){
+		winchMotor.set(-.8);
+			}
 	public void motorOff(){
 
 		winchMotor.set(0);

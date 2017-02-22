@@ -63,6 +63,7 @@ public class Robot extends IterativeRobot {
 	int WinchMotorOffButt=2;
 	boolean winchOn;
 	boolean winchOff;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -162,7 +163,7 @@ public class Robot extends IterativeRobot {
 		//shooter.ShooterMotorOn(lBumperPressed);
 		shooter.FeederMotorOn(rBumperPressed);
 		//winch.motorOn(winchTriggerPressed);
-		winch();
+		agitator();
 		Shooter();
 		tele.EasyMoveBackward(left, right, oi.leftStick);
 		tele.EasyMoveForward(left, right, oi.rightStick);
@@ -207,10 +208,10 @@ public class Robot extends IterativeRobot {
 	}
 	public void Shooter(){
 		if(newShooterOn){
-			winch.motorOn();
+			shooter.motorOn();
 			}
 			else if(newShooterOff){
-			winch.motorOff();
+			shooter.motorOff();
 			}
 	}
 	public void ballMotorBack(){
@@ -218,9 +219,11 @@ public class Robot extends IterativeRobot {
 			pickup.MotorBack();
 		}
 	}
-	public void winch(){
+	public void agitator(){
+	boolean left=(System.currentTimeMillis()%3000==0);
+
 		if (winchOn){
-			winch.motorOn();
+			winch.motorOnTurn(left);
 		}
 		else if(winchOff){
 			winch.motorOff();
