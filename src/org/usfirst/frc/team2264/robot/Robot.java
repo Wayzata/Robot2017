@@ -36,7 +36,8 @@ public class Robot extends IterativeRobot {
 	ControllerButtons buttons;
 	BallPickup pickup;
 	Agitator agitator;
-
+REALwinchOn RealWinchOn;
+REALWinch realwinch;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	UltrasonicSensor ultrasonicSensor;
 	double speedAdjustment=.65;
@@ -61,11 +62,12 @@ public class Robot extends IterativeRobot {
 	boolean shooterBack;
 	int WinchMotorOnButt=3;
 	int WinchMotorOffButt=2;
+	int RealWinchOnButt=3;
 	boolean winchOn;
 	boolean winchOff;
 	long agitatorStartTime;
 	boolean agitatorOn;
-
+	boolean REALwinch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -91,6 +93,8 @@ public class Robot extends IterativeRobot {
 		winchon= new WinchOn(oi.rightStick, WinchMotorOnButt);
 		winchoff= new WinchOff(oi.rightStick, WinchMotorOffButt);
 		agitatorStartTime=System.currentTimeMillis();
+		RealWinchOn= new REALwinchOn(oi.rightStick,RealWinchOnButt );
+		realwinch=new REALWinch();
 	}
 
 	/**
@@ -167,9 +171,11 @@ public class Robot extends IterativeRobot {
 		//winch.motorOn(winchTriggerPressed);
 		agitator();
 		Shooter();
+		RealWinchMotorOn();
 		tele.EasyMoveBackward(left, right, oi.leftStick);
 		tele.EasyMoveForward(left, right, oi.rightStick);
 		ballMotorBack();
+		
 	}
 
 	/**
@@ -180,6 +186,7 @@ public class Robot extends IterativeRobot {
 
 	}
 	public void ReadButtons(){
+		REALwinch= RealWinchOn.get();
 		onButton=buttons.getAButton();
 		offButton=buttons.getYButton();
 		lBumperPressed=buttons.getBumper(Hand.kRight);
@@ -191,13 +198,14 @@ public class Robot extends IterativeRobot {
 		rightReading = oi.getRightJoystick();
 		winchOn=buttons.getStartButton();
 		winchOff= buttons.getBackButton();
+	
 		if(winchOn){
 			agitatorOn= true;
 		}
 		else if(winchOff){
 			agitatorOn=false;
 		}
-
+		
 	}
 	public void BallPickupOnOff(){
 		if (onButton){
@@ -245,6 +253,10 @@ public class Robot extends IterativeRobot {
 		else{
 			agitator.motorOff();
 		}
+	}
+	public void RealWinchMotorOn(){
+			realwinch.motorOn(REALwinch);
+	
 	}
 }
 
