@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	Shooter shooter;
 	ControllerButtons buttons;
 	BallPickup pickup;
-	Winch winch;
+	Agitator agitator;
 
 	SendableChooser<String> chooser = new SendableChooser<>();
 	UltrasonicSensor ultrasonicSensor;
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 		WinchLimit=false;
 		pickup = new BallPickup();
 		shooter = new Shooter();
-		winch = new Winch();
+		agitator = new Agitator();
 		auton= new auto();
 		CameraServer.getInstance().startAutomaticCapture();
 		tele= new Teleop();
@@ -123,8 +123,8 @@ public class Robot extends IterativeRobot {
 		switch (autoSelected) {
 		case gearAuto:
 			timeInAuto=System.currentTimeMillis()- autonomousStartTime;
-			if(((timeInAuto>=1000)&&timeInAuto<=4590)){
-				auton.gearAuto(left,right,dangerRange);
+			if(((timeInAuto>=1000)&&timeInAuto<=4090)){
+				auton.gearAuto(left,right/*,dangerRange*/);
 			}	
 			else{
 				left.set(0);
@@ -189,8 +189,8 @@ public class Robot extends IterativeRobot {
 		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();
 		rightReading = oi.getRightJoystick();
-		winchOn= winchon.get();
-		winchOff= winchoff.get();
+		winchOn=buttons.getStartButton();
+		winchOff= buttons.getBackButton();
 		if(winchOn){
 			agitatorOn= true;
 		}
@@ -230,20 +230,20 @@ public class Robot extends IterativeRobot {
 		long agitatorCurrent= agitatorTime%6000;
 		if (agitatorOn){
 			if(agitatorCurrent<=50){
-				winch.motorOff();
+				agitator.motorOff();
 			}
 			else if(agitatorCurrent<=3000){
-				winch.motorOnTurnF();
+				agitator.motorOnTurnF();
 			}
 			else if(agitatorCurrent<=3050){
-				winch.motorOff();
+				agitator.motorOff();
 			}
 			else{
-				winch.motorOnTurnR();
+				agitator.motorOnTurnR();
 			}
 		}
 		else{
-			winch.motorOff();
+			agitator.motorOff();
 		}
 	}
 }

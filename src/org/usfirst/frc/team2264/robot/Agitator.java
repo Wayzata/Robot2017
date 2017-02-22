@@ -5,13 +5,13 @@ package org.usfirst.frc.team2264.robot;
 
 import com.ctre.CANTalon;
 
-public class Winch {//class for the NEW SHOOTER
-	CANTalon winchMotor;
+public class Agitator {//class for the NEW SHOOTER
+	CANTalon agitatorMotor;
 	double agitatorSpeed;
-	public Winch(){
-		winchMotor= new CANTalon(RobotMap.WinchMotor);
+	public Agitator(){
+		agitatorMotor= new CANTalon(RobotMap.AgitatorMotor);
 
-		winchMotor.setPID(1, 0, 0);
+		agitatorMotor.setPID(1, 0, 0);
 		agitatorSpeed=1;
 	}
 //	public void motorOn(boolean pressed){
@@ -35,14 +35,14 @@ public class Winch {//class for the NEW SHOOTER
 //	}
 //	}
 	public void motorOnTurnR(){
-		winchMotor.set(-1*agitatorSpeed);
+		agitatorMotor.set(-1*agitatorSpeed);
 			}
 	public void motorOnTurnF(){
-		winchMotor.set(agitatorSpeed);
+		agitatorMotor.set(agitatorSpeed);
 	}
 	public void motorOff(){
 
-		winchMotor.set(0);
+		agitatorMotor.set(0);
 }
 //	public void motorLimit(boolean limit){
 //		if (limit){

@@ -18,7 +18,7 @@ public class RobotMap {
 
 	public static final int shooterMotor = 16;
 	public static final int feederMotor = 14;
-	public static final int WinchMotor=6;
+	public static final int AgitatorMotor=6;
 
 	public static final int collectorMotor = 15;
 
