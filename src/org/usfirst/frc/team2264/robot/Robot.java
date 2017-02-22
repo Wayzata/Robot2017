@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 	ControllerButtons buttons;
 	BallPickup pickup;
 	Winch winch;
-	
+
 	SendableChooser<String> chooser = new SendableChooser<>();
 	UltrasonicSensor ultrasonicSensor;
 	double speedAdjustment=.65;
@@ -63,7 +63,9 @@ public class Robot extends IterativeRobot {
 	int WinchMotorOffButt=2;
 	boolean winchOn;
 	boolean winchOff;
-	
+	long agitatorStartTime;
+	boolean agitatorOn;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -88,7 +90,7 @@ public class Robot extends IterativeRobot {
 		tele= new Teleop();
 		winchon= new WinchOn(oi.rightStick, WinchMotorOnButt);
 		winchoff= new WinchOff(oi.rightStick, WinchMotorOffButt);
-
+		agitatorStartTime=System.currentTimeMillis();
 	}
 
 	/**
@@ -136,9 +138,9 @@ public class Robot extends IterativeRobot {
 			if((timeInAuto>=1000)&&timeInAuto<=2500){
 				auton.DriveForward(left, right);
 			}
-//			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
-//				auton.TurnRight(left, right);
-//			}
+			//			else if((timeInAuto>2500)&&(timeInAuto<=3000)){
+			//				auton.TurnRight(left, right);
+			//			}
 			else{
 				left.set(0);
 				right.set(0);
@@ -175,23 +177,27 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-	
+
 	}
 	public void ReadButtons(){
 		onButton=buttons.getAButton();
 		offButton=buttons.getYButton();
 		lBumperPressed=buttons.getBumper(Hand.kRight);
 		rBumperPressed=buttons.getBumper(Hand.kLeft);
-	//winchTriggerPressed= ;
+		//winchTriggerPressed= ;
 		newShooterOn=buttons.getXButton();
 		newShooterOff=buttons.getBButton();
 		leftReading = oi.getLeftJoystick();
 		rightReading = oi.getRightJoystick();
 		winchOn= winchon.get();
 		winchOff= winchoff.get();
-		
-		
-		
+		if(winchOn){
+			agitatorOn= true;
+		}
+		else if(winchOff){
+			agitatorOn=false;
+		}
+
 	}
 	public void BallPickupOnOff(){
 		if (onButton){
@@ -209,10 +215,10 @@ public class Robot extends IterativeRobot {
 	public void Shooter(){
 		if(newShooterOn){
 			shooter.motorOn();
-			}
-			else if(newShooterOff){
+		}
+		else if(newShooterOff){
 			shooter.motorOff();
-			}
+		}
 	}
 	public void ballMotorBack(){
 		if(lBumperPressed){
@@ -220,12 +226,23 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	public void agitator(){
-	boolean left=(System.currentTimeMillis()%3000==0);
-
-		if (winchOn){
-			winch.motorOnTurn(left);
+		long agitatorTime=(System.currentTimeMillis()-agitatorStartTime);
+		long agitatorCurrent= agitatorTime%6000;
+		if (agitatorOn){
+			if(agitatorCurrent<=50){
+				winch.motorOff();
+			}
+			else if(agitatorCurrent<=3000){
+				winch.motorOnTurnF();
+			}
+			else if(agitatorCurrent<=3050){
+				winch.motorOff();
+			}
+			else{
+				winch.motorOnTurnR();
+			}
 		}
-		else if(winchOff){
+		else{
 			winch.motorOff();
 		}
 	}
