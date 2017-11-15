@@ -4,7 +4,7 @@
  */
 package org.usfirst.frc.team2264.robot;
 
-import com.ctre.CANTalon; 
+import com.ctre.CANTalon;  
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
